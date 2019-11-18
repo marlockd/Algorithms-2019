@@ -95,7 +95,28 @@ fun josephTask(menNumber: Int, choiceInterval: Int): Int {
  * вернуть ту из них, которая встречается раньше в строке first.
  */
 fun longestCommonSubstring(first: String, second: String): String {
-    TODO()
+    var result = ""
+    var i = 0
+    var j = 0
+    var max = 0
+    while (i < first.length && j < first.length) {
+        if (!second.contains(first.substring(i, j))) {
+            while (!second.contains(first.substring(i, j)) && j < first.length) {
+                i++
+                j++
+            }
+        } else {
+            while (second.contains(first.substring(i, j))) {
+                val len = first.substring(i, j).length
+                if (len > max) {
+                    max = len
+                    result = first.substring(i, j)
+                }
+                j++
+            }
+        }
+    }
+    return result
 }
 
 /**
@@ -109,9 +130,26 @@ fun longestCommonSubstring(first: String, second: String): String {
  * Единица простым числом не считается.
  */
 fun calcPrimesNumber(limit: Int): Int {
-    TODO()
+    var count = 1
+    if (limit < 2) return 0
+    var number = 3
+    while (number <= limit) {
+        var isPrime = true
+        var d = 3
+        while (d <= Math.sqrt(number.toDouble())) {
+            if (number % d == 0) {
+                isPrime = false
+                break
+            }
+            d += 2
+        }
+        if (isPrime) {
+            count++
+        }
+        number += 2
+    }
+    return count
 }
-
 /**
  * Балда
  * Сложная
