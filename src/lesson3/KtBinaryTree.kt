@@ -98,9 +98,16 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
          * Средняя
          */
         override fun next(): T {
-            // TODO
-            throw NotImplementedError()
+            while (current != null) {
+                stack.push(current)
+                current = current!!.left
+            }
+            current = stack.pop()
+            val node = current
+            current = current!!.right
+            return node!!.value
         }
+
 
         /**
          * Удаление следующего элемента
@@ -129,7 +136,16 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Сложная
      */
     override fun headSet(toElement: T): SortedSet<T> {
-        TODO()
+        val iterator = iterator() as BinaryTreeIterator
+        val tree = BinaryTree<T>()
+        while (iterator.hasNext()) {
+            val next = iterator.next()
+            if (next.compareTo(toElement) < 0) {
+                tree.add(next)
+            } else
+                break
+        }
+        return tree
     }
 
     /**
@@ -137,7 +153,16 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Сложная
      */
     override fun tailSet(fromElement: T): SortedSet<T> {
-        TODO()
+        val set = BinaryTree<T>()
+        set.add(fromElement)
+        val iterator = iterator() as BinaryTreeIterator
+        while (iterator.hasNext()) {
+            val next = iterator.next()
+            if (next.compareTo(fromElement) > 0) {
+                set.add(next)
+            }
+        }
+        return set
     }
 
     override fun first(): T {
