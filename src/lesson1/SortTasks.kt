@@ -6,6 +6,18 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+private fun less(o1: Date?, o2: Date?): Boolean {
+    if (o1 == null && o2 == null) return false
+    if (o1 == null) return true
+    return if (o2 == null) false else o1.compareTo(o2) < 0
+}
+
+private fun more(o1: Date?, o2: Date?): Boolean {
+    if (o1 == null && o2 == null) return false
+    if (o1 == null) return false
+    return if (o2 == null) true else o1.compareTo(o2) > 0
+}
+
 private val random = Random(Calendar.getInstance().timeInMillis)
 
 private fun partition(elements: Array<Date?>, min: Int, max: Int): Int {
@@ -13,26 +25,20 @@ private fun partition(elements: Array<Date?>, min: Int, max: Int): Int {
     var left = min
     var right = max
     while (left <= right) {
-
-        while (elements[left]!!.compareTo(x) < 0) {
+        while (less(elements[left], x)) {
             left++
         }
-
-        while (elements[right]!!.compareTo(x) > 0) {
+        while (more(elements[right], x)) {
             right--
-
         }
-
         if (left <= right) {
             val temp = elements[left]
             elements[left] = elements[right]
             elements[right] = temp
             left++
             right--
-
         }
     }
-
     return right
 }
 
