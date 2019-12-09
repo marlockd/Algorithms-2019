@@ -2,7 +2,6 @@ package lesson1
 
 import org.junit.jupiter.api.Tag
 import kotlin.test.Test
-
 class TaskTestsKotlin : AbstractTaskTests() {
 
     @Test

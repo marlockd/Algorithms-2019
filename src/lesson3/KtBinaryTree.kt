@@ -63,7 +63,8 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
      * Средняя
      */
     override fun remove(element: T): Boolean {
-        TODO()
+        //TODO()
+        throw NotImplementedError()
     }
 
     override operator fun contains(element: T): Boolean {
@@ -84,6 +85,8 @@ class KtBinaryTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSorted
     }
 
     inner class BinaryTreeIterator internal constructor() : MutableIterator<T> {
+        private var current: Node<T>? = root
+        private var stack: Stack<Node<T>> = Stack()
         /**
          * Проверка наличия следующего элемента
          * Средняя
