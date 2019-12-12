@@ -55,8 +55,37 @@ fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
  * Здесь ответ 2 + 3 + 4 + 1 + 2 = 12
  */
 fun shortestPathOnField(inputName: String): Int {
-    TODO()
+    val lines = java.io.FileReader(inputName).readLines()
+    val input = ArrayList<ArrayList<Int>>()
+    for (i in lines.indices) {
+        val line = lines[i].split(" ")
+        input.add(arrayListOf())
+        for (j in line.indices) {
+            input[i].add(line[j].toInt())
+        }
+    }
+    val height = input.size
+    val width = input[0].size
+    val result = Array(height) { IntArray(width) }
+    result[0][0] = input[0][0]
+    for (i in 1 until height) {
+        result[i][0] = result[i - 1][0] + input[i][0]
+    }
+    for (i in 1 until width) {
+        result[0][i] = result[0][i - 1] + input[0][i]
+    }
+    for (i in 1 until height) {
+        for (j in 1 until width) {
+            val up = result[i - 1][j] + input[i][j]
+            val left = result[i][j - 1] + input[i][j]
+            val back = result[i - 1][j - 1] + input[i][j]
+            val value = minOf(up, left, back)
+            result[i][j] = value
+        }
+    }
+    return result[height - 1][width - 1]
 }
+
 
 // Задачу "Максимальное независимое множество вершин в графе без циклов"
 // смотрите в уроке 5

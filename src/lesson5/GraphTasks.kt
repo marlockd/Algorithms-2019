@@ -28,8 +28,27 @@ package lesson5
  * Справка: Эйлеров цикл -- это цикл, проходящий через все рёбра
  * связного графа ровно по одному разу
  */
+fun search(vertex: Graph.Vertex, first: Graph.Vertex, graph: Graph, list: MutableList<Graph.Edge>): Boolean {
+    if (list.size == graph.edges.size && first == vertex && list.size >= 3) return true
+    val neighbors = graph.getNeighbors(vertex)
+    for (neighbor in neighbors) {
+        val connection = graph.getConnection(vertex, neighbor)
+        if (list.contains(connection) && connection != null) continue
+        list.add(connection!!)
+        if (search(neighbor, first, graph, list)) return true
+    }
+    if (list.isNotEmpty()) list.removeAt(list.size - 1)
+    return false
+}
+
 fun Graph.findEulerLoop(): List<Graph.Edge> {
-    TODO()
+    val vertices = this.vertices
+    val first: Graph.Vertex
+    val list = mutableListOf<Graph.Edge>()
+    if (vertices.isEmpty()) return list
+    first = vertices.toTypedArray()[0] as Graph.Vertex
+    search(first, first,this, list)
+    return list
 }
 
 /**
