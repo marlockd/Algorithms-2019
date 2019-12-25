@@ -1,8 +1,11 @@
 @file:Suppress("UNUSED_PARAMETER")
-
 package lesson6
+import java.lang.Math.max
 
 /**
+ * трудоёмкость = O(m*n)
+ * ресурсоёмкость = O(m*n)
+ *
  * Наибольшая общая подпоследовательность.
  * Средняя
  *
@@ -15,7 +18,37 @@ package lesson6
  * При сравнении подстрок, регистр символов *имеет* значение.
  */
 fun longestCommonSubSequence(first: String, second: String): String {
-    TODO()
+    var length1 = first.length + 1
+    var length2 = second.length + 1
+    val sequence = StringBuilder()
+    val matrix = Array(length1) { IntArray(length2) }
+    for (i in 1 until length1) {
+        for (j in 1 until length2) {
+            val ch1 = first[i - 1]
+            val ch2 = second[j - 1]
+            if (ch1 == ch2) {
+                matrix[i][j] = matrix[i - 1][j - 1] + 1
+            } else {
+                matrix[i][j] = max(matrix[i - 1][j], matrix[i][j - 1])
+            }
+        }
+    }
+    length1--
+    length2--
+    while (length1 > 0 && length2 > 0) {
+        val ch1 = first[length1 - 1]
+        val ch2 = second[length2 - 1]
+        if (ch1 == ch2) {
+            sequence.append(ch1)
+            length1--
+            length2--
+        } else if (matrix[length1 - 1][length2] >= matrix[length1][length2 - 1]) {
+            length1--
+        } else {
+            length2--
+        }
+    }
+    return sequence.reverse().toString()
 }
 
 /**

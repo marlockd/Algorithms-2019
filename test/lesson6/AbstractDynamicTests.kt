@@ -18,7 +18,7 @@ abstract class AbstractDynamicTests {
         )
         val expectedLength2 = """ дд саы чтых,
 евшнео ваа се сви дн.
-        """.trimIndent().length
+""".trimIndent().length
         assertEquals(
             expectedLength2, longestCommonSubSequence(
                 """
@@ -26,15 +26,19 @@ abstract class AbstractDynamicTests {
 Когда не в шутку занемог,
 Он уважать себя заставил
 И лучше выдумать не мог.
-                """.trimIndent(),
+""".trimIndent(),
                 """
 Так думал молодой повеса,
 Летя в пыли на почтовых,
 Всевышней волею Зевеса
 Наследник всех своих родных.
-                """.trimIndent()
+""".trimIndent()
             ).length, "Answer must have length of $expectedLength2"
         )
+        assertEquals("боро", longestCommonSubSequence("борода", "борозда"))
+        assertEquals("исоид", longestCommonSubSequence("элипсоид", "синусоида"))
+        assertEquals("20202", longestCommonSubSequence("020202002", "1202102"))
+        assertEquals("", longestCommonSubSequence("", ""))
     }
 
     fun longestIncreasingSubSequence(longestIncreasingSubSequence: (List<Int>) -> List<Int>) {

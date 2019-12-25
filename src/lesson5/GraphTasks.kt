@@ -84,6 +84,10 @@ fun Graph.minimumSpanningTree(): Graph {
 }
 
 /**
+ *
+ * трудоёмкость = O(n^2)
+ * ресурсоёмкость = O(n)
+ *
  * Максимальное независимое множество вершин в графе без циклов.
  * Сложная
  *
@@ -110,7 +114,31 @@ fun Graph.minimumSpanningTree(): Graph {
  * Эта задача может быть зачтена за пятый и шестой урок одновременно
  */
 fun Graph.largestIndependentVertexSet(): Set<Graph.Vertex> {
-    TODO()
+    val results: MutableList<Set<Graph.Vertex>> =
+    ArrayList()
+    val vertices: Set<Graph.Vertex> = this.vertices
+    for (v1 in vertices) {
+        val result: MutableSet<Graph.Vertex> = HashSet()
+        val checked: MutableSet<Graph.Vertex> = HashSet()
+        for (v2 in vertices) {
+            if (!this.getNeighbors(v1).contains(v2) && !checked.contains(v2)) {
+                checked.addAll(this.getNeighbors(v2))
+                result.add(v2)
+            }
+        }
+        results.add(result)
+    }
+    return getSmallestList(results)
+}
+
+fun getSmallestList(list: List<Set<Graph.Vertex>>): Set<Graph.Vertex> {
+    var result: Set<Graph.Vertex> = HashSet()
+    for (r in list) {
+        if (result.size < r.size) {
+            result = r
+        }
+    }
+    return result
 }
 
 /**
